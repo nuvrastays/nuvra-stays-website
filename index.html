@@ -16,7 +16,7 @@
   --gold: #c9a84c;
   --gold-light: #e8c97a;
   --text: #1c1c1c;
-  --muted: #7a7a6a;
+  --muted: #3a3a2e;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -159,8 +159,9 @@ nav.scrolled .nav-links a { color: var(--muted); }
   font-size: 9px;
   letter-spacing: 5px;
   text-transform: uppercase;
-  color: var(--gold);
+  color: rgba(250,246,238,0.55);
   margin-bottom: 28px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -193,12 +194,12 @@ nav.scrolled .nav-links a { color: var(--muted); }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: clamp(17px, 2.2vw, 26px);
-  color: rgba(250,246,238,0.5);
+  color: rgba(250,246,238,0.85);
   margin: 32px 0 52px;
   line-height: 1.65;
 }
 
-.hero-tagline em { color: rgba(250,246,238,0.88); font-style: normal; }
+.hero-tagline em { color: #ffffff; font-style: normal; font-weight: 400; }
 
 .hero-btns { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
 
@@ -348,8 +349,9 @@ nav.scrolled .nav-links a { color: var(--muted); }
 
 .val-word {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 17px;
+  font-size: 18px;
   font-style: italic;
+  font-weight: 600;
   color: var(--mid-green);
   display: block;
   margin-bottom: 4px;
@@ -359,8 +361,8 @@ nav.scrolled .nav-links a { color: var(--muted); }
   font-size: 9px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--muted);
-  opacity: 0.6;
+  color: #2a2a22;
+  opacity: 1;
 }
 
 /* Right column — etymology + manifesto */
@@ -1121,6 +1123,100 @@ footer {
   overflow: hidden;
 }
 
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-calc(50% + 36px));
+  z-index: 10;
+  width: 52px; height: 52px;
+  background: rgba(5,13,6,0.65);
+  border: 1px solid rgba(250,246,238,0.18);
+  color: rgba(250,246,238,0.8);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+  backdrop-filter: blur(6px);
+  margin-top: -36px;
+}
+
+.carousel-arrow:hover {
+  background: rgba(201,168,76,0.85);
+  color: var(--dark-green);
+  border-color: var(--gold);
+}
+
+.carousel-arrow-left  { left: 24px; }
+.carousel-arrow-right { right: 24px; }
+
+/* Lightbox */
+.c-lightbox {
+  position: fixed; inset: 0;
+  background: rgba(3,8,4,0.96);
+  z-index: 999;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+}
+
+.c-lightbox.open { opacity: 1; pointer-events: all; }
+
+.c-lightbox img {
+  max-width: 90vw; max-height: 88vh;
+  object-fit: contain;
+  border: 1px solid rgba(250,246,238,0.06);
+  transition: transform 0.3s;
+}
+
+.clb-close {
+  position: absolute; top: 24px; right: 32px;
+  font-size: 26px; color: rgba(250,246,238,0.4);
+  background: none; border: none; cursor: pointer;
+  transition: color 0.2s;
+}
+
+.clb-close:hover { color: var(--cream); }
+
+.clb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(5,13,6,0.6); border: 1px solid rgba(250,246,238,0.1);
+  color: rgba(250,246,238,0.5); font-size: 28px;
+  cursor: pointer; padding: 14px 18px;
+  transition: all 0.2s;
+}
+
+.clb-nav:hover { color: var(--cream); background: rgba(201,168,76,0.3); }
+.clb-prev { left: 20px; }
+.clb-next { right: 20px; }
+
+.clb-counter {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  font-size: 10px; letter-spacing: 3px; color: rgba(250,246,238,0.3);
+  text-transform: uppercase;
+}
+
+/* Footer policy links */
+.footer-policies {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 16px 80px;
+  border-top: 1px solid rgba(250,246,238,0.05);
+  background: #050d06;
+}
+
+.footer-policies a {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(250,246,238,0.2);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-policies a:hover { color: rgba(250,246,238,0.55); }
+
 .carousel-track {
   display: flex;
   gap: 20px;
@@ -1260,16 +1356,12 @@ footer {
       <div class="section-eyebrow" style="color:rgba(250,246,238,0.4);">The Experience</div>
       <h2 class="carousel-heading">Life at<br><em>Nuvra Stays.</em></h2>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:20px;">
-      <div class="carousel-controls">
-        <button class="carousel-btn" id="cPrev">&#8592;</button>
-        <button class="carousel-btn" id="cNext">&#8594;</button>
-      </div>
-      <div class="carousel-dots" id="cDots"></div>
-    </div>
+    <div class="carousel-dots" id="cDots"></div>
   </div>
 
   <div class="carousel-track-wrap">
+    <button class="carousel-arrow carousel-arrow-left" id="cPrev">&#8592;</button>
+    <button class="carousel-arrow carousel-arrow-right" id="cNext">&#8594;</button>
     <div class="carousel-track" id="cTrack">
       <div class="carousel-slide">
         <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&auto=format&fit=crop&q=80" alt="Himalayan peaks">
@@ -1642,6 +1734,20 @@ footer {
     <span>Built in the Himalayas</span>
   </div>
 </footer>
+<div class="footer-policies">
+  <a href="terms.html">Terms & Conditions</a>
+  <a href="refund-policy.html">Refund Policy</a>
+  <a href="privacy-policy.html">Privacy Policy</a>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="c-lightbox" id="cLightbox">
+  <button class="clb-close" id="clbClose">✕</button>
+  <button class="clb-nav clb-prev" id="clbPrev">‹</button>
+  <img src="" id="clbImg" alt="">
+  <button class="clb-nav clb-next" id="clbNext">›</button>
+  <div class="clb-counter" id="clbCounter"></div>
+</div>
 
 <script>
 // Nav scroll
@@ -1684,6 +1790,7 @@ const slides = track ? Array.from(track.children) : [];
 const dotsWrap = document.getElementById('cDots');
 const slideWidth = () => slides[0] ? slides[0].offsetWidth + 20 : 540;
 let cIndex = 0;
+let autoTimer;
 
 function buildDots() {
   if (!dotsWrap) return;
@@ -1691,7 +1798,7 @@ function buildDots() {
   slides.forEach((_, i) => {
     const d = document.createElement('button');
     d.className = 'c-dot' + (i === 0 ? ' active' : '');
-    d.addEventListener('click', () => goTo(i));
+    d.addEventListener('click', () => { goTo(i); resetAuto(); });
     dotsWrap.appendChild(d);
   });
 }
@@ -1702,13 +1809,60 @@ function goTo(idx) {
   document.querySelectorAll('.c-dot').forEach((d, i) => d.classList.toggle('active', i === cIndex));
 }
 
+function resetAuto() {
+  clearInterval(autoTimer);
+  autoTimer = setInterval(() => goTo(cIndex < slides.length - 1 ? cIndex + 1 : 0), 4000);
+}
+
 buildDots();
+document.getElementById('cPrev')?.addEventListener('click', () => { goTo(cIndex - 1 < 0 ? slides.length - 1 : cIndex - 1); resetAuto(); });
+document.getElementById('cNext')?.addEventListener('click', () => { goTo(cIndex < slides.length - 1 ? cIndex + 1 : 0); resetAuto(); });
+resetAuto();
 
-document.getElementById('cPrev')?.addEventListener('click', () => goTo(cIndex - 1));
-document.getElementById('cNext')?.addEventListener('click', () => goTo(cIndex + 1));
+// Lightbox
+const lightbox = document.getElementById('cLightbox');
+const clbImg = document.getElementById('clbImg');
+const clbCounter = document.getElementById('clbCounter');
+const allImgs = slides.map(s => s.querySelector('img'));
+let lbIdx = 0;
 
-// Auto-advance
-setInterval(() => goTo(cIndex < slides.length - 1 ? cIndex + 1 : 0), 4000);
+function openLb(idx) {
+  lbIdx = idx;
+  clbImg.src = allImgs[idx].src.replace('w=900', 'w=1600');
+  clbCounter.textContent = (idx + 1) + ' / ' + allImgs.length;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLb() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+slides.forEach((s, i) => s.addEventListener('click', () => openLb(i)));
+document.getElementById('clbClose')?.addEventListener('click', closeLb);
+lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLb(); });
+
+document.getElementById('clbPrev')?.addEventListener('click', e => {
+  e.stopPropagation();
+  lbIdx = (lbIdx - 1 + allImgs.length) % allImgs.length;
+  clbImg.src = allImgs[lbIdx].src.replace('w=900', 'w=1600');
+  clbCounter.textContent = (lbIdx + 1) + ' / ' + allImgs.length;
+});
+
+document.getElementById('clbNext')?.addEventListener('click', e => {
+  e.stopPropagation();
+  lbIdx = (lbIdx + 1) % allImgs.length;
+  clbImg.src = allImgs[lbIdx].src.replace('w=900', 'w=1600');
+  clbCounter.textContent = (lbIdx + 1) + ' / ' + allImgs.length;
+});
+
+document.addEventListener('keydown', e => {
+  if (!lightbox?.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowLeft') document.getElementById('clbPrev').click();
+  if (e.key === 'ArrowRight') document.getElementById('clbNext').click();
+});
 </script>
 </body>
 </html>
